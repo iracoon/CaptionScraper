@@ -126,10 +126,12 @@ public class HomeController
 	    		  
 		      	  String tmp = readCaptionsSite("http://miamifl.iqm2.com/Services/TranscriptGet.aspx?MediaID=" + id + "&format=vtt");
 		      	  cap = tmp;
+		      	  isSuccess = true;
 		      	  return tmp;
     		}
     		catch (Exception ex ) 
     		{
+    			isSuccess = false;
     		    return null;
     		}
     	}
@@ -153,17 +155,17 @@ public class HomeController
     	{
     		String id = vidURL.substring(vidURL.lastIndexOf("Encoder") + 7);
     		capURL = "https://video.isilive.ca/miamilakes/New%20Encoder" + id + ".vtt";
-    		System.out.println(capURL);
-    		
     		try 
     		{
         		InputStream inputStream = new URL(capURL).openStream();
         		parsed_captions = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
         		cap = parsed_captions;
+        		isSuccess = true;
         		return parsed_captions;
 			} 
     		catch (Exception e) 
     		{
+    			isSuccess = false;
 				return null;
 			}
     	}
