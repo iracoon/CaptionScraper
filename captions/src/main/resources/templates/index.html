@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Captions</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="jumbotron vertical-center">
+<div class="container">
+<div class="row justify-content-md-center">
+<div class="col-md-auto">
+<h2>Captions Scraper</h2>
+<form th:action="@{'/getcaptions'}" method="post">
+	<div class="form-group">
+	  <label for="usr">Video Link:</label>
+	  <input type="text" class="form-control" th:value="${vidURL}" id="vidURL" name="vidURL" >
+	</div>
+    <button type="submit" class="btn btn-info">Get Captions</button>
+</form>
+
+<br>
+<div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${successmessage}">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<strong th:text="${successmessage}"></strong>
+</div>
+
+<div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${errormessage}">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<strong th:text="${errormessage}"></strong>
+</div>
+
+</div>
+</div>
+</div>    
+</div>
+
+<div class="container">
+  <div class="row">
+  <div class="col">
+  <div class="accordion" id="accordionExample">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Prerequisites</button>
+      </h5>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+      <p>
+      Youtube-dl should be installed exactly as per instructions so that it is saved in the correct location. 
+      <br>
+      <b>https://ytdl-org.github.io/youtube-dl/download.html </b> 
+      <br><br>
+      Videos must already have viewable captions.
+      </p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Acceptable Links</button>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body">
+        <p>
+        <i>https://www.youtube.com/</i>
+        <br>
+      	*note: any youtube link will work
+      	<br>
+      	<b>video link example:</b> https://www.youtube.com/watch?v=EQ68RPqORh4 
+      	<br><br>
+      	<i>miamigov.com/Government/Meeting-Portal-Watch-Live-Meetings</i>
+      	<br>
+      	<b>video link example:</b> https://miamifl.granicus.com/MediaPlayer.php?view_id=1&clip_id=50 
+      	<br><br>
+      	<i>http://miamidade.granicus.com/VPodcast.php?view_id=4</i>
+      	<i>http://miamidade.granicus.com/Podcast.php?view_id=2</i>
+      	<br>
+      	*note: view_id can change
+      	<br>
+      	<b>video link example:</b> http://miamidade.granicus.com/MediaPlayer.php?view_id=4&clip_id=5648
+      	<br><br>  	
+      	<i>https://pub-miamilakes.escribemeetings.com/</i>
+      	<br>
+      	*note: FileName=legacy links do not have captions
+      	<br>
+      	<b>video link example:</b> https://pub-miamilakes.escribemeetings.com/Players/ISIStandAlonePlayer.aspx?ClientId=miamilakes&FileName=New%20Encoder_SC_2019-09-24-08-21.mp4
+      	<br><br>
+      	<i>http://coralgables.granicus.com/ViewPublisher.php?view_id=5</i>
+      	<i>https://coralgables.legistar.com/Calendar.aspx</i>
+      	<br>
+      	*note: view_id can change
+      	<br>
+      	<b>video link example:</b> http://coralgables.granicus.com/MediaPlayer.php?view_id=5&clip_id=1397
+      	<br><br>
+      	<i>http://miamifl.iqm2.com/Citizens/calendar.aspx</i>
+      	<br>
+      	<b>video link example:</b> http://miamifl.iqm2.com/Citizens/SplitView.aspx?Mode=Video&MeetingID=2191&Format=Minutes 
+      	<br><br>
+      	<i>https://apps.tampagov.net/cttv_cc_webapp/</i>
+      	<br>
+      	<b>video link example:</b> https://apps.tampagov.net/cttv_cc_webapp/Agenda.aspx?pkey=2185 
+      </p>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+    <div class="col">
+	    <div class="row">
+	    	<div class="col">
+	    		<h4><b>Captions</b></h4>
+	    	</div>
+	    	<div class="col">
+	    	<form th:action="@{'/download'}" method="post">
+	    		<button class="btn" type="submit" style="background-color: #000000; color: #ffffff;">Download</button>
+	    		</form>
+	    	</div>
+	    </div>
+	    <br>
+	    <div class="row">
+	    	<div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${file_success}">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong th:text="${file_success}"></strong>
+			</div>
+			
+			<div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${file_err}">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong th:text="${file_err}"></strong>
+			</div>
+	    </div>
+	    <br>
+	    <div class="row">
+		    <p>
+		    	<span th:text="${message}"></span>
+		    </p>
+	    </div>
+    </div>
+  </div>
+</div>
+	
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" ></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script> 	
+</body>
+</html>
